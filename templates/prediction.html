@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laptop Price Prediction</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <div class="img">
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+                </div>
+                <div class="heading">
+                    <h2>Laptop Price Prediction and Recommendation</h2>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('homepage') }}" id="prediction-link">Home</a></li>
+                   
+                </ul>
+            </nav>
+        </div>
+        <div class="content">
+            <div id="prediction-form">
+                <h2>Enter Laptop Details</h2>
+                <form method="post" action="{{ url_for('prediction') }}">
+                    <label for="brand">Brand:</label>
+                    <select id="brand" name="brand">
+                        <option value="Apple">Apple</option>
+                        <option value="HP">HP</option>
+                        <option value="Acer">Acer</option>
+                        <option value="Asus">Asus</option>
+                        <option value="Dell">Dell</option>
+                        <option value="Lenovo">Lenovo</option>
+                        <option value="MSI">MSI</option>
+                        <option value="Toshiba">Toshiba</option>
+                        <option value="Other">Other</option>
+                    </select><br>
+                    <label for="type">Type:</label>
+                    <select id="type" name="type">
+                        <option value="Ultrabook">Ultrabook</option>
+                        <option value="Notebook">Notebook</option>
+                        <option value="Netbook">Netbook</option>
+                        <option value="Gaming">Gaming</option>
+                        <option value="2 in 1 Convertible">2 in 1 Convertible</option>
+                        <option value="Workstation">Workstation</option>
+                    </select><br>
+                    <label for="processor">Processor:</label>
+                    <select id="processor" name="processor">
+                        <option value="AMD">AMD</option>
+                        <option value="Intel Core i3">Intel Core i3</option>
+                        <option value="Intel Core i5">Intel Core i5</option>
+                        <option value="Intel Core i7">Intel Core i7</option>
+                        <option value="Other Intel Processor">Other Intel Processor</option>
+                    </select><br>
+                    <label for="ram">RAM (GB):</label>
+                    <select id="ram" name="ram">
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="6">6</option>
+                        <option value="8">8</option>
+                        <option value="12">12</option>
+                        <option value="16">16</option>
+                        <option value="24">24</option>
+                        <option value="32">32</option>
+                        <option value="64">64</option>
+                    </select><br>
+                    <label for="os">Operating System :</label>
+                    <select id="os" name="os">
+                        <option value="Mac">Mac</option>
+                        <option value="Windows">Windows</option>
+                        <option value="Linux">Linux</option>
+                        <option value="Other">Other</option>
+                    </select><br>
+                    <label for="touchscreen">Touchscreen : </label>
+                    <select id="touchscreen" name="touchscreen">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select><br>
+                    <label for="ips">IPS Panel : </label>
+                    <select id="ips" name="ips">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select><br>
+                    <label for="ssd">SSD(GB):</label>
+                    <select id="ssd" name="ssd">
+                        <option value="0">0</option>
+                        <option value="8">8</option>
+                        <option value="16">16</option>
+                        <option value="32">32</option>
+                        <option value="64">64</option>
+                        <option value="128">128</option>
+                        <option value="180">180</option>
+                        <option value="240">240</option>
+                        <option value="256">256</option>
+                        <option value="512">512</option>
+                        <option value="1000">1000</option>
+                    </select>
+                    <label for="hdd">HDD(GB):</label>
+                    <select id="hdd" name="hdd">
+                        <option value="0">0</option>
+                        <option value="32">32</option>
+                        <option value="128">128</option>
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                        <option value="2000">2000</option>
+                    </select>
+                    <label for="gpu">GPU:</label>
+                    <select id="gpu" name="gpu">
+                        <option value="AMD">AMD</option>
+                        <option value="Intel">Intel</option>
+                        <option value="Nvidia">Nvidia</option>
+                    </select>
+                    <label for="weight">Weight (kg):</label>
+                    <input type="number" id="weight" name="weight" step="0.1" class="weight"><br>
+                    <script>
+                        {% if form_data %}
+                        document.getElementById('brand').value = "{{ form_data['brand'] }}";
+                        document.getElementById('type').value = "{{ form_data['type'] }}";
+                        document.getElementById('processor').value = "{{ form_data['processor'] }}";
+                        document.getElementById('ram').value = "{{ form_data['ram'] }}";
+                        document.getElementById('os').value = "{{ form_data['os'] }}";
+                        document.getElementById('touchscreen').value = "{{ form_data['touchscreen'] }}";
+                        document.getElementById('ips').value = "{{ form_data['ips'] }}";
+                        document.getElementById('ssd').value = "{{ form_data['ssd'] }}";
+                        document.getElementById('hdd').value = "{{ form_data['hdd'] }}";
+                        document.getElementById('gpu').value = "{{ form_data['gpu'] }}";
+                        document.getElementById('weight').value = "{{ form_data['weight'] }}";
+                        {% endif %}
+                    </script>
+
+                    <button type="submit">Predict Price</button>
+                    <div class="answer">
+                        {% if result %}
+                        <h2>Predicted Price : {{ result }}</h2>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+            <div class="recommend">
+                
+                {% if list %}
+                <div class="line">
+                    <h2>You may also like : </h2>
+                </div>
+                <div class="top5">
+                    <div class="photo">
+                    
+                    
+                        <img src={{list[0][1]}}
+                            alt="">
+                        <div class="details">
+                            <h4>Name : {{list[0][0]}}</h4>
+                            <h4>Price : {{list[0][2]}}</h4>
+                        </div>
+                    </div>
+            
+                    <div class="photo">
+                        <img src={{list[1][1]}}
+                            alt="">
+                        <div class="details">
+                            <h4>Name : {{list[1][0]}}</h4>
+                            <h4>Price : {{list[1][2]}}</h4>
+                        </div>
+                    </div>
+            
+                    <div class="photo">
+                        <img src={{list[2][1]}}
+                            alt="">
+                        <div class="details">
+                            <h4>Name : {{list[2][0]}}</h4>
+                            <h4>Price : {{list[2][2]}}</h4>
+                        </div>
+                    </div>
+            
+                    <div class="photo">
+                        <img src={{list[3][1]}}
+                            alt="">
+                        <div class="details">
+                            <h4>Name : {{list[3][0]}} </h4>
+                            <h4>Price : {{list[3][2]}}</h4>
+            
+                        </div>
+                    </div>
+            
+                    <div class="photo">
+                        <img src={{list[4][1]}}
+                            alt="">
+                        <div class="details">
+                            <h4>Name : {{list[4][0]}}</h4>
+                            <h4>Price : {{list[4][2]}}</h4>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+</html>
